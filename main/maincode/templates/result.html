@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Results</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Results</h1>
+        <div class="metrics">
+            <div>Accuracy: {{ accuracy }}</div>
+            <div>Precision: {{ precision }}</div>
+            <div>Recall: {{ recall }}</div>
+            <div>F1 Score: {{ f1 }}</div>
+        </div>
+
+        <h2>Uploaded Data (Head)</h2>
+        <div class="data-head">
+            {{ head_data|safe }}  <!-- Display the head of the dataset -->
+        </div>
+
+        <h2>Confusion Matrix</h2>
+        <div class="confusion-matrix">
+            <table>
+                <tr>
+                    <th></th>
+                    {% for i in range(conf_matrix[0]|length) %}
+                    <th>{{ loop.index0 }}</th>
+                    {% endfor %}
+                </tr>
+                {% for row in conf_matrix %}
+                <tr>
+                    <th>{{ loop.index0 }}</th>
+                    {% for value in row %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <h2>Decision Tree</h2>
+        <img src="data:image/png;base64,{{ plot_url }}" alt="Decision Tree">
+        
+        <h2>Confusion Matrix Plot</h2>
+        <img src="data:image/png;base64,{{ cm_plot_url }}" alt="Confusion Matrix">
+        
+        <a href="/">Upload a new dataset</a>
+    </div>
+</body>
+</html>
