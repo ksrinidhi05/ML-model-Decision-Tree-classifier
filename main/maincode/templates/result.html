@@ -14,16 +14,17 @@
             <div>Precision: {{ precision }}</div>
             <div>Recall: {{ recall }}</div>
             <div>F1 Score: {{ f1 }}</div>
+            <div>AUC Score: {{ auc_score }}</div>
         </div>
 
         <h2>Uploaded Data (Head)</h2>
-        <div class="data-head">
-            {{ head_data|safe }}  <!-- Display the head of the dataset -->
+        <div class="data-head" style="overflow-x:auto;">
+            {{ head_data|safe }}
         </div>
 
         <h2>Confusion Matrix</h2>
         <div class="confusion-matrix">
-            <table>
+            <table >
                 <tr>
                     <th></th>
                     {% for i in range(conf_matrix[0]|length) %}
@@ -43,10 +44,33 @@
 
         <h2>Decision Tree</h2>
         <img src="data:image/png;base64,{{ plot_url }}" alt="Decision Tree">
-        
+
         <h2>Confusion Matrix Plot</h2>
         <img src="data:image/png;base64,{{ cm_plot_url }}" alt="Confusion Matrix">
-        
+
+        <h2>ROC Curve</h2>
+        <img src="data:image/png;base64,{{ roc_curve_url }}" alt="ROC Curve">
+
+        <h2>Feature Importance</h2>
+        <img src="data:image/png;base64,{{ feature_importance_url }}" alt="Feature Importance">
+
+        <h2>Training vs Testing Accuracy</h2>
+        <img src="data:image/png;base64,{{ acc_plot_url }}" alt="Training vs Testing Accuracy">
+
+        <h2>Hyperparameters</h2>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+            </tr>
+            {% for param, value in hyperparameters.items() %}
+            <tr>
+                <td>{{ param }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
         <a href="/">Upload a new dataset</a>
     </div>
 </body>
